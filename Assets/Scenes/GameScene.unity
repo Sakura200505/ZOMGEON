@@ -42799,6 +42799,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 521835817922658222, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 521835817922658222, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
+      propertyPath: 'ObservedComponents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1194075619}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -42809,6 +42817,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1773623360729482, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1194075618}
+    - targetCorrespondingSourceObject: {fileID: 1773623360729482, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1194075619}
   m_SourcePrefab: {fileID: 100100000, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
 --- !u!1001 &597829351
 PrefabInstance:
@@ -67159,7 +67170,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0
@@ -75619,6 +75630,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1194075619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194075612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonTransformView
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!4 &1198209302 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 91d652779ec7140488b6b8e360497937, type: 3}
@@ -81120,20 +81147,15 @@ MonoBehaviour:
   shootEnabled: 1
   shootMode: 0
   maxAmmo: 100
-  bulletPrefab: {fileID: 2067474318530062416, guid: a147bf73380e5a14cb78138204ccc3cb, type: 3}
-  bulletSpeed: 50
-  maxSupplyValue: 100
-  damage: 1
-  shootInterval: 0.15
-  shootRange: 50
-  supplyInterval: 0.1
-  muzzleFlashScale: {x: 0.5, y: 0.5, z: 0.5}
   muzzleFlashPrefab: {fileID: 100000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
+  muzzleFlashScale: {x: 0.5, y: 0.5, z: 0.5}
   hitEffectPrefab: {fileID: 1399383282668229580, guid: 175c76daf85b67342a6577c095a6ebeb, type: 3}
   explosionEffectPrefab: {fileID: 3710493514319318364, guid: dda5762569ace3c4fa582c798cb0c776, type: 3}
+  shootRange: 50
+  shootInterval: 0.15
+  damage: 1
   ammoGauge: {fileID: 1137795335}
   ammoText: {fileID: 1981455391}
-  supplyGauge: {fileID: 1438090838}
   audioSource: {fileID: 1194075618}
   fireSe: {fileID: 8300000, guid: 8fafb8052343f0943b8b755f553cf885, type: 3}
   explosionSound: {fileID: 8300000, guid: b27a7c4f2304f414c92e91bf7590a2a2, type: 3}
