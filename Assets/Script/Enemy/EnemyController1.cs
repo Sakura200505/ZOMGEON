@@ -27,6 +27,8 @@ public class EnemyController1 : MonoBehaviourPun
 
     void Start()
     {
+        Debug.Log($"{gameObject.name}" + $"ViewID={photonView.ViewID}" + $"IsMine={photonView.IsMine}");
+
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
@@ -45,7 +47,13 @@ public class EnemyController1 : MonoBehaviourPun
 
     void Update()
     {
-        if (!photonView.IsMine) return; // MasterClient ÇÃÇ›à⁄ìÆêßå‰
+        if (!photonView.IsMine)
+        {
+            Debug.Log("Enemy Not Mine");
+            return;
+        }
+
+        Debug.Log("Enemy Moving");
 
         if (moveEnabled && target != null)
         {
@@ -55,7 +63,7 @@ public class EnemyController1 : MonoBehaviourPun
         {
             Stop();
         }
-    }
+}
 
     void Move()
     {

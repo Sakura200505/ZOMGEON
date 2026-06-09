@@ -26,9 +26,15 @@ public class FirstPersonMovement : MonoBehaviourPun
 
     void FixedUpdate()
     {
-        Debug.Log($"IsMine={photonView.IsMine} ViewID={photonView.ViewID}");
 
-        if (!photonView.IsMine) return; // 自分だけ操作
+        Debug.Log(
+                gameObject.name +
+                " ViewID=" + photonView.ViewID +
+                " IsMine=" + photonView.IsMine
+            );
+
+        if (!photonView.IsMine) return;
+
 
         IsRunning = canRun && Input.GetKey(runningKey);
 
