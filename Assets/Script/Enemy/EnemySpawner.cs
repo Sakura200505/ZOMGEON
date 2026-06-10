@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,9 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         if (spawnEnabled)
         {
             StartCoroutine(SpawnTimer());
@@ -65,7 +69,10 @@ public class EnemySpawner : MonoBehaviour
             int choosedIndex = Random.Range(0, enemyPrefabs.Length);
             float diffPositionX = Random.Range(minPositionX, maxPositonX);
             Vector3 position = new Vector3(transform.position.x + diffPositionX, transform.position.y, transform.position.z);
-            Instantiate(enemyPrefabs[choosedIndex], position, Quaternion.identity);
+            Instantiate(
+            enemyPrefabs[choosedIndex],
+            position,
+            Quaternion.identity);
 
             return true;
         }

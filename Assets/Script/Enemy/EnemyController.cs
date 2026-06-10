@@ -85,11 +85,18 @@ public class EnemyController : MonoBehaviourPun, IPunObservable
 
     void Move()
     {
-        agent.speed = moveSpeed;
-        animator.SetFloat("Speed", agent.speed, 0.1f, Time.deltaTime);
+        if (target == null)
+        {
+            Debug.Log("Target Null");
+            return;
+        }
 
         agent.SetDestination(target.position);
-        rigidBody.linearVelocity = agent.desiredVelocity; // linearVelocity �� velocity
+
+        Debug.Log(
+            "Velocity = " +
+            agent.velocity.magnitude
+        );
     }
 
     void Stop()
