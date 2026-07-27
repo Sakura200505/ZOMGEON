@@ -5,142 +5,290 @@ using Photon.Pun;
 
 public class FirstPersonGunController : MonoBehaviourPun
 {
-    public enum ShootMode { AUTO, SEMIAUTO }
+    public enum ShootMode
+    {
+        AUTO,
+        SEMIAUTO
+    }
+
 
     public bool shootEnabled = true;
 
+
+    [Header("射撃設定")]
     [SerializeField] private ShootMode shootMode = ShootMode.AUTO;
     [SerializeField] private int maxAmmo = 50;
-    [SerializeField] private GameObject muzzleFlashPrefab;
-    [SerializeField] private Vector3 muzzleFlashScale;
-    [SerializeField] private GameObject hitEffectPrefab;
-    [SerializeField] private GameObject explosionEffectPrefab;
-    [SerializeField] private float shootRange = 50;
+    [SerializeField] private float shootRange = 50f;
     [SerializeField] private float shootInterval = 0.1f;
     [SerializeField] private int damage = 1;
+
+
+    [Header("エフェクト")]
+    [SerializeField] private GameObject muzzleFlashPrefab;
+    [SerializeField] private Vector3 muzzleFlashScale;
+
+    [SerializeField] private GameObject hitEffectPrefab;
+
+    [SerializeField] private GameObject explosionEffectPrefab;
+
+
+    [Header("UI")]
     [SerializeField] private Image ammoGauge;
     [SerializeField] private Text ammoText;
+
+
+    [Header("音")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip fireSe;
     [SerializeField] private AudioClip explosionSound;
 
+
+
     private bool shooting = false;
+
     private int ammo;
+
     private GameObject muzzleFlash;
     private GameObject hitEffect;
+
+
 
     public int Ammo
     {
         get => ammo;
+
         set
         {
             ammo = Mathf.Clamp(value, 0, maxAmmo);
-            if (ammoText != null) ammoText.text = ammo.ToString("D3");
+
+
+            if (ammoText != null)
+            {
+                ammoText.text = ammo.ToString("D3");
+            }
+
+
             if (ammoGauge != null)
-                ammoGauge.rectTransform.localScale = new Vector3((float)ammo / maxAmmo, 1, 1);
+            {
+                ammoGauge.rectTransform.localScale =
+                    new Vector3(
+                        (float)ammo / maxAmmo,
+                        1,
+                        1
+                    );
+            }
         }
     }
 
-    private void Start()
+
+
+
+    void Start()
     {
-        if (!photonView.IsMine) return;
+        if (!photonView.IsMine)
+            return;
+
+
         Ammo = maxAmmo;
     }
 
-    private void Update()
-    {
-        if (!photonView.IsMine) return;
 
-        if (shootEnabled && ammo > 0 && GetInput())
+
+
+    void Update()
+    {
+        if (!photonView.IsMine)
+            return;
+
+
+        if (
+            shootEnabled &&
+            ammo > 0 &&
+            GetInput()
+        )
+        {
             StartCoroutine(ShootTimer());
+        }
     }
 
-    private bool GetInput()
+
+
+
+
+    bool GetInput()
     {
-        return shootMode == ShootMode.AUTO ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0);
+        if (shootMode == ShootMode.AUTO)
+        {
+            return Input.GetMouseButton(0);
+        }
+        else
+        {
+            return Input.GetMouseButtonDown(0);
+        }
     }
 
-    private IEnumerator ShootTimer()
+
+
+
+
+    IEnumerator ShootTimer()
     {
-        if (shooting) yield break;
+        if (shooting)
+            yield break;
+
 
         shooting = true;
+
+
         HandleMuzzleFlash(true);
+
+
         Shoot();
+
+
         yield return new WaitForSeconds(shootInterval);
+
+
         HandleMuzzleFlash(false);
+
+
         shooting = false;
     }
 
-    private void Shoot()
+
+
+
+
+    void Shoot()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, shootRange))
+        Ray ray = new Ray(
+            transform.position,
+            transform.forward
+        );
+
+
+        if (
+            Physics.Raycast(
+                ray,
+                out RaycastHit hit,
+                shootRange
+            )
+        )
         {
             HandleHitEffect(true, hit);
 
+
+
             if (hit.collider.CompareTag("Enemy"))
             {
-                EnemyController enemy = hit.collider.GetComponent<EnemyController>();
+                EnemyController enemy =
+                    hit.collider.GetComponent<EnemyController>();
+
+
                 if (enemy != null)
                 {
-                    // マスタークライアントがダメージ処理
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        enemy.Hp -= damage;
-                    }
-                    else
-                    {
-                        enemy.photonView.RPC("TakeDamage", RpcTarget.MasterClient, damage);
-                    }
-
-                    // HP <=0なら爆発エフェクトをローカルで再生
-                    if (enemy.Hp <= 0)
-                    {
-                        if (explosionEffectPrefab != null)
-                            Instantiate(explosionEffectPrefab, hit.point, Quaternion.identity);
-
-                        if (audioSource != null && explosionSound != null)
-                            audioSource.PlayOneShot(explosionSound);
-                    }
+                    // MasterClientへダメージ送信
+                    enemy.photonView.RPC(
+                        "TakeDamage",
+                        RpcTarget.MasterClient,
+                        damage
+                    );
                 }
             }
         }
 
+
         Ammo--;
-        if (audioSource != null && fireSe != null)
+
+
+        if (
+            audioSource != null &&
+            fireSe != null
+        )
+        {
             audioSource.PlayOneShot(fireSe);
+        }
     }
 
-    private void HandleMuzzleFlash(bool isActive)
-    {
-        if (muzzleFlashPrefab == null) return;
 
-        if (muzzleFlash == null && isActive)
+
+
+
+    void HandleMuzzleFlash(bool active)
+    {
+        if (muzzleFlashPrefab == null)
+            return;
+
+
+        if (
+            muzzleFlash == null &&
+            active
+        )
         {
-            muzzleFlash = Instantiate(muzzleFlashPrefab, transform.position, transform.rotation, transform);
-            muzzleFlash.transform.localScale = muzzleFlashScale;
+            muzzleFlash =
+                Instantiate(
+                    muzzleFlashPrefab,
+                    transform.position,
+                    transform.rotation,
+                    transform
+                );
+
+
+            muzzleFlash.transform.localScale =
+                muzzleFlashScale;
         }
 
+
         if (muzzleFlash != null)
-            muzzleFlash.SetActive(isActive);
+        {
+            muzzleFlash.SetActive(active);
+        }
     }
 
-    private void HandleHitEffect(bool isActive, RaycastHit hit = default)
+
+
+
+
+    void HandleHitEffect(
+        bool active,
+        RaycastHit hit = default
+    )
     {
-        if (hitEffectPrefab == null || !isActive)
+        if (
+            hitEffectPrefab == null ||
+            !active
+        )
         {
-            if (hitEffect != null) hitEffect.SetActive(false);
+            if (hitEffect != null)
+                hitEffect.SetActive(false);
+
             return;
         }
 
+
+
         if (hitEffect == null)
         {
-            hitEffect = Instantiate(hitEffectPrefab, hit.point, Quaternion.identity);
+            hitEffect =
+                Instantiate(
+                    hitEffectPrefab,
+                    hit.point,
+                    Quaternion.identity
+                );
         }
 
-        hitEffect.transform.position = hit.point;
-        hitEffect.transform.rotation = Quaternion.FromToRotation(Vector3.forward, hit.normal);
+
+        hitEffect.transform.position =
+            hit.point;
+
+
+        hitEffect.transform.rotation =
+            Quaternion.FromToRotation(
+                Vector3.forward,
+                hit.normal
+            );
+
+
         hitEffect.SetActive(true);
     }
 }

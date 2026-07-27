@@ -160,13 +160,13 @@ MonoBehaviour:
   shootEnabled: 1
   shootMode: 0
   maxAmmo: 100
+  shootRange: 50
+  shootInterval: 0.15
+  damage: 1
   muzzleFlashPrefab: {fileID: 100000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
   muzzleFlashScale: {x: 0.5, y: 0.5, z: 0.5}
   hitEffectPrefab: {fileID: 1399383282668229580, guid: 175c76daf85b67342a6577c095a6ebeb, type: 3}
   explosionEffectPrefab: {fileID: 3710493514319318364, guid: dda5762569ace3c4fa582c798cb0c776, type: 3}
-  shootRange: 50
-  shootInterval: 0.15
-  damage: 1
   ammoGauge: {fileID: 0}
   ammoText: {fileID: 0}
   audioSource: {fileID: 3398809674912323856}

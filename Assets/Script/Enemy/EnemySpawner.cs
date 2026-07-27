@@ -1,30 +1,27 @@
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-
     public bool spawnEnabled = false;
 
-    [SerializeField]
-    int maxEnemies = 10;
-    [SerializeField]
-    float minPositionX = -3;
-    [SerializeField]
-    float maxPositonX = 3;
-    [SerializeField]
-    float minSpawnInterval = 1;
-    [SerializeField]
-    float maxSpawnInterval = 3;
-    [SerializeField]
-    GameObject[] enemyPrefabs;
+    [SerializeField] private int maxEnemies = 10;
+    [SerializeField] private float minSpawnInterval = 1;
+    [SerializeField] private float maxSpawnInterval = 3;
+    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private Transform[] spawnPoints;
 
-    bool spawning = false;
+    private bool spawning = false;
+
+    private void Start()
+    {
+        Debug.Log("EnemySpawnerãNìÆ");
+    }
 
     void Update()
     {
+        // MasterClientÇæÇØÇ™ìGÇê∂ê¨Ç∑ÇÈ
         if (!PhotonNetwork.IsMasterClient)
             return;
 
@@ -36,24 +33,18 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnTimer()
     {
-        if (!spawning)
+        if (spawning)
+            yield break;
+
+        if (SpawnEnemy())
         {
-            if (SpawnEnemy())
-            {
-                spawning = true;
+            spawning = true;
 
-                float interval = Random.Range(minSpawnInterval, maxSpawnInterval);
-                yield return new WaitForSeconds(interval);
+            float interval = Random.Range(minSpawnInterval, maxSpawnInterval);
+            yield return new WaitForSeconds(interval);
 
-                spawning = false;
-            }
-            else
-            {
-                yield return null;
-            }
+            spawning = false;
         }
-
-        yield return null;
     }
 
     bool SpawnEnemy()
@@ -61,20 +52,20 @@ public class EnemySpawner : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         if (enemies.Length >= maxEnemies)
-        {
             return false;
-        }
-        else
-        {
-            int choosedIndex = Random.Range(0, enemyPrefabs.Length);
-            float diffPositionX = Random.Range(minPositionX, maxPositonX);
-            Vector3 position = new Vector3(transform.position.x + diffPositionX, transform.position.y, transform.position.z);
-            Instantiate(
-            enemyPrefabs[choosedIndex],
+
+        int choosedIndex = Random.Range(0, enemyPrefabs.Length);
+
+        int spawnIndex = Random.Range(0, spawnPoints.Length);
+
+        Vector3 position = spawnPoints[spawnIndex].position;
+
+        // PhotonÇ≈ìGÇê∂ê¨
+        PhotonNetwork.Instantiate(
+            enemyPrefabs[choosedIndex].name,
             position,
             Quaternion.identity);
 
-            return true;
-        }
+        return true;
     }
 }

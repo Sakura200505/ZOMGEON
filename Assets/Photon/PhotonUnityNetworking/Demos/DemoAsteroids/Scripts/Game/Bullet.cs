@@ -14,6 +14,8 @@ namespace Photon.Pun.Demo.Asteroids
 
         public void OnCollisionEnter(Collision collision)
         {
+            Debug.Log("Hit : " + collision.gameObject.name);
+
             Destroy(gameObject);
         }
 
