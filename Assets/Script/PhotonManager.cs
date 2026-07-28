@@ -27,7 +27,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        // マスターサーバーへ接続
+        PhotonNetwork.AutomaticallySyncScene = true;
+
         PhotonNetwork.ConnectUsingSettings();
     }
 

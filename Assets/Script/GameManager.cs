@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviourPun
     [SerializeField] private float waitTime = 2f;
     [SerializeField] private EnemySpawner[] spawners;
 
+    [SerializeField] private int clearEnemyCount = 5;
+
+    private int defeatedEnemyCount = 0;
+
     [System.NonSerialized] public bool gameOver = false;
 
     private int score = 0;
@@ -129,4 +133,33 @@ public class GameManager : MonoBehaviourPun
         if (scoreText != null)
             scoreText.text = score.ToString("D8");
     }
+
+    public void EnemyDefeated()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        defeatedEnemyCount++;
+
+        Debug.Log($"Œ‚”j”F{defeatedEnemyCount}");
+
+        if (defeatedEnemyCount >= clearEnemyCount)
+        {
+            SetSpawners(false);
+
+            StopAllCoroutines();
+            StartCoroutine(ClearGame());
+        }
+    }
+
+    IEnumerator ClearGame()
+    {
+        centerText.enabled = true;
+        centerText.text = "CLEAR!!";
+
+        yield return new WaitForSeconds(2f);
+
+        PhotonNetwork.LoadLevel("GameClear");
+    }
+
 }

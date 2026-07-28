@@ -183,6 +183,7 @@ public class EnemyController : MonoBehaviourPun, IPunObservable
         if (gameManager != null)
         {
             gameManager.Score += score;
+            gameManager.EnemyDefeated();
         }
 
 
