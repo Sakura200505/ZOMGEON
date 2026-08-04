@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class GameManager : MonoBehaviourPun
+public class PhotonGameManager : MonoBehaviourPun
 {
     [SerializeField] private int maxScore = 99999;
     [SerializeField] private Text scoreText;

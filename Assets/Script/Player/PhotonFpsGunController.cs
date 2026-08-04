@@ -1,9 +1,9 @@
-using Photon.Pun;
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class FirstPersonGunController : MonoBehaviourPun
+public class PhotonFirstPersonGunController : MonoBehaviourPun
 {
     public enum ShootMode
     {
@@ -15,7 +15,7 @@ public class FirstPersonGunController : MonoBehaviourPun
     public bool shootEnabled = true;
 
 
-    [Header("ËŒ‚İ’è")]
+    [Header("å°„æ’ƒè¨­å®š")]
     [SerializeField] private ShootMode shootMode = ShootMode.AUTO;
     [SerializeField] private int maxAmmo = 50;
     [SerializeField] private float shootRange = 50f;
@@ -23,7 +23,7 @@ public class FirstPersonGunController : MonoBehaviourPun
     [SerializeField] private int damage = 1;
 
 
-    [Header("ƒGƒtƒFƒNƒg")]
+    [Header("ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ")]
     [SerializeField] private GameObject muzzleFlashPrefab;
     [SerializeField] private Vector3 muzzleFlashScale;
 
@@ -37,7 +37,7 @@ public class FirstPersonGunController : MonoBehaviourPun
     [SerializeField] private Text ammoText;
 
 
-    [Header("‰¹")]
+    [Header("éŸ³")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip fireSe;
     [SerializeField] private AudioClip explosionSound;
@@ -85,6 +85,10 @@ public class FirstPersonGunController : MonoBehaviourPun
 
     void Start()
     {
+        if (!photonView.IsMine)
+            return;
+
+
         Ammo = maxAmmo;
     }
 
@@ -93,6 +97,10 @@ public class FirstPersonGunController : MonoBehaviourPun
 
     void Update()
     {
+        if (!photonView.IsMine)
+            return;
+
+
         if (
             shootEnabled &&
             ammo > 0 &&
@@ -173,31 +181,18 @@ public class FirstPersonGunController : MonoBehaviourPun
 
             if (hit.collider.CompareTag("Enemy"))
             {
-                EnemyController enemy =
-                    hit.collider.GetComponent<EnemyController>();
+                PhotonEnemyController enemy =
+                    hit.collider.GetComponent<PhotonEnemyController>();
 
 
                 if (enemy != null)
                 {
-                    enemy.TakeDamage(damage);
-
-                    // “G‚ğ“|‚µ‚½‚ç”š”­ƒGƒtƒFƒNƒg‚ğÄ¶
-                    if (enemy.Hp - damage <= 0)
-                    {
-                        if (explosionEffectPrefab != null)
-                        {
-                            Instantiate(
-                                explosionEffectPrefab,
-                                hit.point,
-                                Quaternion.identity
-                            );
-                        }
-
-                        if (audioSource != null && explosionSound != null)
-                        {
-                            audioSource.PlayOneShot(explosionSound);
-                        }
-                    }
+                    // MasterClientã¸ãƒ€ãƒ¡ãƒ¼ã‚¸é€ä¿¡
+                    enemy.photonView.RPC(
+                        "TakeDamage",
+                        RpcTarget.MasterClient,
+                        damage
+                    );
                 }
             }
         }
