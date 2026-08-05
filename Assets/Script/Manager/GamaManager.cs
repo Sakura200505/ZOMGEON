@@ -133,36 +133,4 @@ public class GameManager : MonoBehaviour
             enemyCountText.text = "Žc” : " + count;
         }
     }
-
-    public void EnemyDefeated()
-    {
-        if (isCleared)
-            return;
-
-        defeatedEnemyCount++;
-
-        Debug.Log($"Œ‚”j” : {defeatedEnemyCount}");
-
-        if (defeatedEnemyCount >= clearEnemyCount)
-        {
-            isCleared = true;
-
-            SetSpawners(false);
-
-            StartCoroutine(ClearGame());
-        }
-    }
-
-    private IEnumerator ClearGame()
-    {
-        if (centerText != null)
-        {
-            centerText.enabled = true;
-            centerText.text = "CLEAR!!";
-        }
-
-        yield return new WaitForSeconds(2f);
-
-        SceneManager.LoadScene("GameClear");
-    }
 }

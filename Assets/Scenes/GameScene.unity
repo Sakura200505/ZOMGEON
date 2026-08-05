@@ -42636,7 +42636,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 584892047}
-  - component: {fileID: 584892046}
   - component: {fileID: 584892048}
   m_Layer: 0
   m_Name: EnemyManager
@@ -42645,18 +42644,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &584892046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 584892045}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad1d7eab27641cb41a985ab74ad92cdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &584892047
 Transform:
   m_ObjectHideFlags: 0
@@ -81259,7 +81246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FirstPersonGunController
   shootEnabled: 1
   shootMode: 0
-  maxAmmo: 200
+  maxAmmo: 300
   shootRange: 50
   shootInterval: 0.15
   damage: 3
@@ -128528,7 +128515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3716ba1bd8ad1d42bdcf17377edd40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamaManager
-  maxScore: 99999
+  maxScore: 9999
   scoreText: {fileID: 1969081609}
   enemyCountText: {fileID: 854030042}
   spawners: []

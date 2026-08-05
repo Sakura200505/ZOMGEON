@@ -148,18 +148,6 @@ public class PhotonGameManager : MonoBehaviourPun
             SetSpawners(false);
 
             StopAllCoroutines();
-            StartCoroutine(ClearGame());
         }
     }
-
-    IEnumerator ClearGame()
-    {
-        centerText.enabled = true;
-        centerText.text = "CLEAR!!";
-
-        yield return new WaitForSeconds(2f);
-
-        PhotonNetwork.LoadLevel("GameClear");
-    }
-
 }

@@ -15,7 +15,7 @@ public class EnemyManager : MonoBehaviour
 
         if (enemyBox.Length == 0)
         {
-            SceneManager.LoadScene("GameClear");
+            SceneManager.LoadScene("NextScene");
         }
     }
 }
