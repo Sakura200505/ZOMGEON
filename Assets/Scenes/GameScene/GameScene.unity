@@ -42671,6 +42671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281fc07584aa12b40ac515ee55384fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
+  nextSceneName: NextScene
 --- !u!4 &585332175 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c8fcb67cb3d648b4b87d500ece16b15f, type: 3}

@@ -4725,7 +4725,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1006448509}
-  - component: {fileID: 1006448508}
   - component: {fileID: 1006448510}
   m_Layer: 0
   m_Name: GameManager
@@ -4734,28 +4733,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1006448508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006448507}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb58a9a6ef4b6454eb6052e94361ea80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxScore: 99999
-  scoreText: {fileID: 1002439336}
-  enemyCountText: {fileID: 1633883996}
-  firstPerson: {fileID: 83106905}
-  gunController: {fileID: 0}
-  centerText: {fileID: 1084638623}
-  waitTime: 2
-  spawners:
-  - {fileID: 0}
-  clearEnemyCount: 5
 --- !u!4 &1006448509
 Transform:
   m_ObjectHideFlags: 0
@@ -6777,6 +6754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281fc07584aa12b40ac515ee55384fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextSceneName: GameClear
 --- !u!4 &1402897385 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 91d652779ec7140488b6b8e360497937, type: 3}

@@ -133,4 +133,17 @@ public class GameManager : MonoBehaviour
             enemyCountText.text = "écêî : " + count;
         }
     }
+
+    private IEnumerator ClearGame()
+    {
+        if (centerText != null)
+        {
+            centerText.enabled = true;
+            centerText.text = "CLEAR!!";
+        }
+
+        yield return new WaitForSeconds(waitTime);
+
+        SceneManager.LoadScene("GameClear");
+    }
 }
