@@ -26,5 +26,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PhotonScene/PhotonScene.unity
     guid: b799a8fe2966b3a4abe6daf8d2103ba1
+  - enabled: 1
+    path: Assets/Scenes/PhotonScene/NextPhotonScene.unity
+    guid: 63c4292db1a8c244cb695f8ee6971783
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

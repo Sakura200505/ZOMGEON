@@ -1,26 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class PhotonEnemyManager : MonoBehaviourPun
 {
     private GameObject[] enemyBox;
 
+    [SerializeField] private string nextSceneName = "NextScene";
+
     void Update()
     {
-        if (!PhotonNetwork.IsMasterClient) return; // MasterClient だけが管理
+        // MasterClientのみシーン遷移を管理
+        if (!PhotonNetwork.IsMasterClient)
+            return;
 
         enemyBox = GameObject.FindGameObjectsWithTag("Enemy");
 
-        // デバッグ用
         Debug.Log("敵の数：" + enemyBox.Length);
 
         if (enemyBox.Length == 0)
         {
-            // シーン遷移はMasterClientがPhotonNetwork.LoadLevelで行う
-            PhotonNetwork.LoadLevel("NextScene");
+            PhotonNetwork.LoadLevel(nextSceneName);
         }
     }
 }

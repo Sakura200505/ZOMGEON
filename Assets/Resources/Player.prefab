@@ -159,10 +159,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootEnabled: 1
   shootMode: 0
-  maxAmmo: 100
+  maxAmmo: 300
   shootRange: 50
   shootInterval: 0.15
-  damage: 1
+  damage: 10
   muzzleFlashPrefab: {fileID: 100000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
   muzzleFlashScale: {x: 0.5, y: 0.5, z: 0.5}
   hitEffectPrefab: {fileID: 1399383282668229580, guid: 175c76daf85b67342a6577c095a6ebeb, type: 3}
@@ -375,7 +375,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114762042097486276, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114963311885979670, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
       propertyPath: speed
